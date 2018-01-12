@@ -11,15 +11,13 @@ public class Layout : MonoBehaviour {
 		foreach (Transform child in this.transform) {
 			elem.Add(child.gameObject);
 		}
+
 		// Debug.Log(elem.Count);
 		// foreach (var c in elem) {
 		// 	Debug.Log(c.name);
 		// }
 	}
 	private void Start () {
-		foreach (GameObject sq in this.elem) {
-			sq.GetComponent<Renderer>().material = (Material)Resources.Load("Texture/YELLOW", typeof(Material));
-		}
 	}
 
 	public GameObject this[int pos] {
@@ -27,6 +25,23 @@ public class Layout : MonoBehaviour {
 			if (elem == null)
 				return null;
 			return this.elem[pos];
+		}
+	}
+
+	public void setcolor(int[] pos, int[] pos2, Color m_color)
+	{
+		foreach (int a in pos2){
+			elem[a].GetComponent<Renderer>().material.color = Color.yellow;
+		}
+		foreach (int a in pos){
+			elem[a].GetComponent<Renderer>().material.color = m_color;
+		}
+	}
+
+	public void hsetcolor(int[] pos, Color m_color)
+	{
+		foreach (int a in pos){
+			elem[a].GetComponent<Renderer>().material.color = m_color;
 		}
 	}
 }

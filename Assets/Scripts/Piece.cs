@@ -8,10 +8,10 @@ public class Carre : Piece {
 		_rotpos *= -1;
 	}
 	public override void Activate() {
-		pos[0] = 4;
-		pos[1] = 5;
-		pos[2] = 14;
-		pos[3] = 15;
+		pos[0] = 196;
+		pos[1] = 195;
+		pos[2] = 186;
+		pos[3] = 185;
 	}
 }
 
@@ -24,10 +24,10 @@ public class Ligne : Piece {
 		_rotpos *= -1;
 	}
 	public override void Activate() {
-		pos[0] = 3;
-		pos[1] = 4;
-		pos[2] = 5;
-		pos[3] = 6;
+		pos[0] = 197;
+		pos[1] = 196;
+		pos[2] = 195;
+		pos[3] = 194;
 	}
 }
 
@@ -42,10 +42,10 @@ public class T : Piece {
 	}
 
 	public override void Activate() {
-		pos[0] = 4;
-		pos[1] = 14;
-		pos[2] = 15;
-		pos[3] = 16;
+		pos[0] = 196;
+		pos[1] = 186;
+		pos[2] = 185;
+		pos[3] = 184;
 	}
 }
 
@@ -59,10 +59,10 @@ public class Z : Piece {
 	}
 
 	public override void Activate() {
-		pos[0] = 3;
-		pos[1] = 4;
-		pos[2] = 14;
-		pos[3] = 15;
+		pos[0] = 197;
+		pos[1] = 196;
+		pos[2] = 186;
+		pos[3] = 185;
 	}
 
 }
@@ -77,10 +77,10 @@ public class N : Piece {
 	}
 
 	public override void Activate() {
-		pos[0] = 13;
-		pos[1] = 14;
-		pos[2] = 4;
-		pos[3] = 5;
+		pos[0] = 187;
+		pos[1] = 186;
+		pos[2] = 196;
+		pos[3] = 195;
 	}
 }
 
@@ -101,10 +101,10 @@ public class L : Piece {
 		_rotpos = (_rotpos + 1) % 4;
 	}
 	public override void Activate() {
-		pos[0] = 5;
-		pos[1] = 13;
-		pos[2] = 14;
-		pos[3] = 15;
+		pos[0] = 198;
+		pos[1] = 187;
+		pos[2] = 186;
+		pos[3] = 185;
 	}
 
 }
@@ -127,10 +127,10 @@ public class OL : Piece {
 	}
 
 	public override void Activate() {
-		pos[0] = 3;
-		pos[1] = 4;
-		pos[2] = 5;
-		pos[3] = 15;
+		pos[0] = 197;
+		pos[1] = 196;
+		pos[2] = 195;
+		pos[3] = 185;
 	}
 }
 
@@ -140,18 +140,15 @@ public abstract class Piece {
 	public int[] pos { get { return _pos; } set {_pos = value;}}
 	public abstract void Activate();
 	
-	private void Start() {
-		_pos[0] = -1;
-		_pos[1] = -1;
-		_pos[2] = -1;
-		_pos[3] = -1;
+	public Piece (){
+		this._pos = new int[] { -1, -1, -1, -1 };
 	}
 
 	public void Descend() {
-		_pos[0] += 10;
-		_pos[1] += 10;
-		_pos[2] += 10;
-		_pos[3] += 10;
+		_pos[0] -= 10;
+		_pos[1] -= 10;
+		_pos[2] -= 10;
+		_pos[3] -= 10;
 	}
 
 	public void Droite() {

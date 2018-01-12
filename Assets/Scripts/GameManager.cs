@@ -25,9 +25,19 @@ public class GameManager : MonoBehaviour {
 	private Piece _activ;
 	private Piece _idle;
 	private Layout _layout;
+	// private Material m_none;
+	// private Material m_color;
+	// private Material m_grey; 
 
-	private void Start () {
+
+	private void Awake () {
+		int iter = 0;
+
 		_layout = GameObject.FindObjectOfType<Layout>();
+		while (iter < 200){
+			_layout[iter].GetComponent<Renderer>().material.color = Color.yellow;
+			iter++;
+		}
 		_activ = NewPiece();
 		setactive(_activ);
 		_idle = NewPiece();
@@ -44,11 +54,11 @@ public class GameManager : MonoBehaviour {
 	}
 
 	private void Update () {
-		if (Input.GetAxisRaw("Horizontal") == -1)
+		if (Input.GetKeyDown(KeyCode.LeftArrow))
 			MoveG();
-		if (Input.GetAxisRaw("Horizontal") == 1)
+		if (Input.GetKeyDown(KeyCode.RightArrow))
 			MoveD();
-		if (Input.GetAxisRaw("Vertical") == -1){
+		if (Input.GetKeyDown(KeyCode.DownArrow)){
 			while (DescendUnit() == true){}
 			changePiece();
 		}
@@ -58,7 +68,6 @@ public class GameManager : MonoBehaviour {
 		int _type;
 		float rdm = Random.value;
 		Piece tmp;
-
 
 		_type = (int)Mathf.Round(rdm * 8f - .51f);
 		Debug.Log(_type);
@@ -86,6 +95,7 @@ public class GameManager : MonoBehaviour {
 		tmp.Descend();
 		if (check_pos(tmp.pos, _activ.pos) == true)
 		{
+			_layout.setcolor(_activ.pos, tmp.pos, Color.blue);
 			_activ.Descend();
 			return (true);
 		}
@@ -101,19 +111,17 @@ public class GameManager : MonoBehaviour {
 	}
 
 	private void end(Piece pce){
-		Material _material = (Material)Resources.Load("GREY", typeof(Material));
 		int 	iter = 0;
 
 		while (iter < 4){
-			_layout[_activ.pos[iter]].GetComponent<Renderer>().material = _material;
+			_layout[pce.pos[iter]].GetComponent<Renderer>().material.color = Color.grey;
 			iter++;
 		}
 	}
 
 	private void setactive(Piece pce){
-		if (pce == null)
-			Debug.Log("C null");
 		pce.Activate();
+		_layout.hsetcolor(pce.pos, Color.blue);
 	}
 
 	private void checkline(){
@@ -123,7 +131,7 @@ public class GameManager : MonoBehaviour {
 
 		while (line < 20){
 			col = 0;
-			while (_layout[line * 10 + col].GetComponent<Renderer>().material == (Material)Resources.Load("GREY", typeof(Material))){
+			while (_layout[line * 10 + col].GetComponent<Renderer>().material.color == Color.grey){
 				if (col == 9){
 					deleteLine(line);
 					count++;
@@ -142,9 +150,9 @@ public class GameManager : MonoBehaviour {
 		iter = line * 10;
 		while (_layout[iter]){
 			if (iter < 190)
-				_layout[iter].GetComponent<Renderer>().material = (Material)Resources.Load("NONE", typeof(Material));
+				_layout[iter].GetComponent<Renderer>().material.color = Color.white;
 			else
-				_layout[iter].GetComponent<Renderer>().material = _layout[iter + 10].GetComponent<Renderer>().material;	
+				_layout[iter].GetComponent<Renderer>().material.color = _layout[iter + 10].GetComponent<Renderer>().material.color;	
 			iter++;
 		}
 
@@ -155,14 +163,14 @@ public class GameManager : MonoBehaviour {
 
 		iter = -1;
 		foreach(int a in pos){
-			if (_layout[a].GetComponent<Renderer>().material == (Material)Resources.Load("GREY", typeof(Material)))
+			if (a < 0 || _layout[a].GetComponent<Renderer>().material.color == Color.red)
 				return (false);
 		}
 		while (++iter < 4){
-			if (_layout[pos[iter]].GetComponent<Renderer>().material == (Material)Resources.Load("NONE", typeof(Material)) || pos[iter] % 10 != init[iter] % 10)
-				return (false);
+			if (_layout[pos[iter]].GetComponent<Renderer>().material.color == Color.white)
+		 		return (false);
 		}
-		return(true);
+		return (true);
 	}
 
 	private bool MoveD(){
@@ -171,6 +179,7 @@ public class GameManager : MonoBehaviour {
 		tmp = _activ;
 		tmp.Droite();
 		if (check_pos(tmp.pos, _activ.pos) == true){
+			_layout.setcolor(_activ.pos, tmp.pos, Color.blue);
 			_activ.Droite();
 			return (true);
 		}
@@ -183,6 +192,7 @@ public class GameManager : MonoBehaviour {
 		tmp = _activ;
 		tmp.Gauche();
 		if (check_pos(tmp.pos, _activ.pos) == true){
+			_layout.setcolor(_activ.pos, tmp.pos, Color.blue);
 			_activ.Gauche();
 			return (true);
 		}
