@@ -57,22 +57,26 @@ public class GameManager : MonoBehaviour {
 	private Piece NewPiece(){
 		int _type;
 		float rdm = Random.value;
+		Piece tmp;
+
 
 		_type = (int)Mathf.Round(rdm * 8f - .51f);
 		Debug.Log(_type);
 		if (_type == 0)
-			return new Carre();
+			tmp = new Carre();
 		else if (_type == 1)
-			return new Ligne();
+			tmp = new Ligne();
 		else if (_type == 2)
-			return new T();
+			tmp = new T();
 		else if (_type == 3)
-			return new Z();
+			tmp = new Z();
 		else if (_type == 4)
-			return new N();
+			tmp = new N();
 		else if (_type == 5)
-			return new L();	
-		return new OL();	
+			tmp = new L();	
+		else
+			tmp = new OL();
+		return tmp;	
 	}
 
 	private bool DescendUnit(){
@@ -104,10 +108,6 @@ public class GameManager : MonoBehaviour {
 			_layout[_activ.pos[iter]].GetComponent<Renderer>().material = _material;
 			iter++;
 		}
-		//_layout[_activ.pos[0]].GetComponent<Renderer>().material = Resources.Load("GREY", typeof(Material));
-		//_layout[_activ.pos[1]].GetComponent<GameObject>().renderer.material = Resources.Load("GREY", typeof(Material));
-		//_layout[_activ.pos[2]].GetComponent<GameObject>().renderer.material = Resources.Load("GREY", typeof(Material));
-		//_layout[_activ.pos[3]].GetComponent<GameObject>().renderer.material = Resources.Load("GREY", typeof(Material));
 	}
 
 	private void setactive(Piece pce){
